@@ -1,4 +1,5 @@
-
+import {checkAttribute} from './js/hooks';
+import checkInputs from "./js/checkInputs";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles/styles.scss";
 
@@ -44,8 +45,8 @@ const createTemplate = ({phone, name, email, address}, index) =>{
 			<td>${address}</td>
 			<td>
 				<span class="btn-group" role="group">
-					<button onclick="editItem(${index})" type="button" class="btn btn-primary">Edit</button>
-					<button data-index="${index}" type="button" class="btn btn-danger">Delete</button>
+					<button data-btn-edit type="button" class="btn btn-primary">Edit</button>
+					<button data-btn-delete type="button" class="btn btn-danger">Delete</button>
 				</span>
 			</td>
 		</tr>
@@ -53,17 +54,26 @@ const createTemplate = ({phone, name, email, address}, index) =>{
 }
 
 fillHTML();
+checkInputs(form);
 
 form.addEventListener('submit', function (e) {
 	e.preventDefault();
 	addNewBook(this.querySelectorAll('input'));
 	updateLocal();
 	fillHTML();
+	checkInputs(form);
 })
 
-const deleteItem = (index) => {
-	console.log(index)
-	// books.splice(index, 1);
-	// updateLocal();
-	// fillHTML();
-}
+document.addEventListener( 'click' ,event => {
+	const elem = event.target;
+	let index;
+	if (checkAttribute(elem, 'data-btn-edit')) {
+		console.log(elem.closest('tr').getAttribute('data-index'))
+	}
+	if (checkAttribute(elem, 'data-btn-delete')) {
+		index = elem.closest('tr').getAttribute('data-index');
+		books.splice(index, 1);
+		updateLocal();
+		fillHTML();
+	}
+})
