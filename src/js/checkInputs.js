@@ -1,10 +1,14 @@
 const checkInputs = (form) => {
     const inputs = form.querySelectorAll('input');
     const buttonSubmit = form.querySelector('button')
-    let valid = {};
+    let valid = {
+        phone: false,
+        name: false,
+        email: false,
+        address: false
+    };
 
     function checkValid() {
-        console.log(Object.values(valid).includes(false))
         return ( !Object.values(valid).includes(false) && Object.keys(valid).length > 0)
             ? buttonSubmit.disabled = false
             : buttonSubmit.disabled = true;
