@@ -7,6 +7,7 @@ const form = document.querySelector('form');
 const tableWrap = document.querySelector('.table tbody');
 let flagSort = true
 let books = [];
+let searchBooks = '';
 
 !localStorage.books ? books = [] : books = JSON.parse(localStorage.getItem('books'));
 
@@ -26,11 +27,12 @@ const updateLocal = () => {
 
 const fillHTML = () => {
 	tableWrap.innerHTML = '';
-	if (books.length) {
-		books.forEach((book, index) => {
+	function iteration(arr) {
+		arr.forEach((book, index) => {
 			tableWrap.innerHTML += createTemplate(book, index);
 		})
 	}
+	searchBooks.length ? iteration(searchBooks) : books.length ? iteration(books) : null
 }
 
 const createTemplate = ({phone, name, email, address}, index) =>{
@@ -50,6 +52,22 @@ const createTemplate = ({phone, name, email, address}, index) =>{
 	`
 }
 
+const searchBook = (arr, input) => {
+	const searchInput = document.querySelector(input);
+	searchInput.addEventListener('keyup', function (e){
+		let searchVal = e.target.value;
+		let findBooks = [];
+		if (searchVal.length > 0) {
+            findBooks = arr.filter(book => Object.values(book).some( value => value.toLowerCase().indexOf(searchVal) > -1 ))
+            findBooks.length ? searchBooks = findBooks : null;
+		} else {
+			searchBooks = [];
+		}
+		fillHTML();
+	})
+}
+
+searchBook(books, '[data-search]');
 fillHTML();
 checkInputs(form);
 
