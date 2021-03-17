@@ -1,10 +1,11 @@
-import {checkAttribute} from './js/hooks';
+import {checkAttribute, sortCol} from './js/helpers';
 import checkInputs from "./js/checkInputs";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles/styles.scss";
 
 const form = document.querySelector('form');
 const tableWrap = document.querySelector('.table tbody');
+let flagSort = true
 let books = [];
 
 !localStorage.books ? books = [] : books = JSON.parse(localStorage.getItem('books'));
@@ -73,6 +74,13 @@ document.addEventListener( 'click' ,event => {
 	if (checkAttribute(elem, 'data-btn-delete')) {
 		index = elem.closest('tr').getAttribute('data-index');
 		books.splice(index, 1);
+		updateLocal();
+		fillHTML();
+	}
+	if (checkAttribute(elem, 'data-key')) {
+		const key = elem.getAttribute('data-key');
+		flagSort = !flagSort;
+		sortCol(books, key, flagSort)
 		updateLocal();
 		fillHTML();
 	}
