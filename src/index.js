@@ -27,15 +27,13 @@ const updateLocal = () => {
 
 const fillHTML = () => {
 	tableWrap.innerHTML = '';
-	function iteration(arr) {
-		arr.forEach((book, index) => {
-			tableWrap.innerHTML += createTemplate(book, index);
-		})
-	}
-	searchBooks.length ? iteration(searchBooks) : books.length ? iteration(books) : null
+	books.forEach((book, index) => {
+		tableWrap.innerHTML += createTemplate(book, index);
+	})
+	searchBook('.table tbody tr', '[data-search]');
 }
 
-const createTemplate = ({phone, name, email, address}, index) =>{
+const createTemplate = ({phone, name, email, address}, index) => {
 	return `
 		<tr data-index="${index}">
 			<td data-edit="phone">${phone}</td>
@@ -52,34 +50,36 @@ const createTemplate = ({phone, name, email, address}, index) =>{
 	`
 }
 
-const searchBook = (arr, input) => {
+const searchBook = (rowsTable, input) => {
+	const rows = document.querySelectorAll(rowsTable);
 	const searchInput = document.querySelector(input);
-	searchInput.addEventListener('keyup', function (e){
-		let searchVal = e.target.value;
-		let findBooks = [];
-		if (searchVal.length > 0) {
-            findBooks = arr.filter(book => Object.values(book).some( value => value.toLowerCase().indexOf(searchVal) > -1 ))
-            findBooks.length ? searchBooks = findBooks : null;
-		} else {
-			searchBooks = [];
-		}
-		fillHTML();
+	let searchVal = searchInput.value.toLowerCase();
+	const searchFoo = (input) => {
+		let searchValue = input.value;
+		rows.forEach( row => {
+			[...row.querySelectorAll('[data-edit]')].some( value => value.textContent.toLowerCase().indexOf(searchValue) > -1 )
+				? row.style.display = 'table-row'
+				: row.style.display = 'none'
+		} )
+	}
+	if (searchVal.length > 0) searchFoo(searchInput);
+	searchInput.addEventListener('keyup', function (e) {
+		searchFoo(searchInput);
 	})
 }
 
-searchBook(books, '[data-search]');
-fillHTML();
 checkInputs(form);
+fillHTML();
 
 form.addEventListener('submit', function (e) {
 	e.preventDefault();
 	addNewBook(this.querySelectorAll('input'));
+	checkInputs(form);
 	updateLocal();
 	fillHTML();
-	checkInputs(form);
 })
 
-document.addEventListener( 'click' ,event => {
+document.addEventListener('click', event => {
 	const elem = event.target;
 	let index;
 	if (checkAttribute(elem, 'data-btn-edit')) {
