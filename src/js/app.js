@@ -69,6 +69,11 @@ app.init = function (formSelector, wrapSelector) {
 		updateLocal(){
 			localStorage.setItem('books', JSON.stringify(books))
 		},
+		submit(e){
+			e.preventDefault();
+			actions.addNewBook(this.querySelectorAll('input'));
+			actions.render();
+		},
 		render(){
 			validation(form);
 			actions.updateLocal();
@@ -90,11 +95,7 @@ app.init = function (formSelector, wrapSelector) {
 	document.addEventListener('click', listeners);
 
 	//Create new book
-	form.addEventListener('submit', function (e) {
-		e.preventDefault();
-		actions.addNewBook(this.querySelectorAll('input'));
-		actions.render();
-	})
+	form.addEventListener('submit', actions.submit)
 
 	//Check localStorage
 	actions.checkLocal();
