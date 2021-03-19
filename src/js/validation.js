@@ -1,4 +1,4 @@
-const checkInputs = (form) => {
+const validation = (form) => {
     const inputs = form.querySelectorAll('input');
     const buttonSubmit = form.querySelector('button')
     let valid = {
@@ -27,4 +27,4 @@ const checkInputs = (form) => {
     checkValid();
 }
 
-export default checkInputs;
+export default validation;

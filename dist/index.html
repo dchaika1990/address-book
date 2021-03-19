@@ -9,20 +9,21 @@
 <body>
 <header class="border-bottom">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-6 text-center text-lg-left">Application</div>
-            <div class="col-lg-6 text-center text-lg-right">
+        <div class="row align-items-center">
+            <div class="col-lg-6 text-center text-lg-left"><h2 class="mb-0">Address book</h2></div>
+            <div class="col-lg-6 text-center text-lg-right mt-lg-0 mt-2">
                 <input type="text" data-search="" class="search" placeholder="search">
             </div>
         </div>
     </div>
 </header>
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <div id="app" class="mt-5">
+<section class="mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body">
+                        <h5 class="card-title">Add new record</h5>
                         <form class="add-info" novalidate="">
                             <div class="form-group">
                                 <input type="number" data-input="phone" placeholder="phone">
@@ -36,31 +37,32 @@
                             <div class="form-group">
                                 <input type="text" data-input="address" placeholder="address">
                             </div>
-                            <div class="form-group">
-                                <button class="btn btn-success" type="submit">Add new record (or Save)</button>
+                            <div class="form-group border-top pt-4">
+                                <button class="btn btn-success" type="submit">Submit</button>
                             </div>
                         </form>
                     </div>
                 </div>
-                <div class="table-responsive mt-5">
+            </div>
+            <div class="col-lg-8 mt-5 mt-lg-0">
+                <div class="table-responsive">
                     <table class="table">
                         <thead class="thead-dark">
-                            <tr>
-                                <th data-key="phone">phone</th>
-                                <th data-key="name">full name</th>
-                                <th data-key="email">email</th>
-                                <th data-key="address">address</th>
-                                <th>operations</th>
-                            </tr>
+                        <tr>
+                            <th data-key="phone">Phone</th>
+                            <th data-key="name">Full name</th>
+                            <th data-key="email">Email</th>
+                            <th data-key="address">Address</th>
+                            <th>Operations</th>
+                        </tr>
                         </thead>
-                        <tbody>
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 <script src="/src.e31bb0bc.js"></script>
 </body>
 </html>

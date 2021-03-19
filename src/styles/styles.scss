@@ -1,6 +1,21 @@
 $primary-color: white;
 $bg: black;
-h1 {
+
+*:hover,
+*:focus{
+  outline: unset;
+}
+
+header{
+  background-color: #0b102e;
   color: $primary-color;
-  background-color: $bg;
+  padding: 20px 0;
+}
+
+input{
+  width: 100%;
+}
+
+thead{
+  white-space: nowrap;
 }

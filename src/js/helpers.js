@@ -14,6 +14,14 @@ export function sortCol(arr, key, flag) {
 export function rewriteArray(arr, newBook, index) {
     const before = arr.slice(0, index);
     const after = arr.slice(+index + 1);
-    // console.log([...before, newBook, ...after])
     return [...before, newBook, ...after];
+}
+
+export function displayRows (input, rows) {
+    let searchValue = input.value.toLowerCase().trimLeft();
+    rows.forEach( row => {
+        [...row.querySelectorAll('[data-edit]')].some( value => value.textContent.toLowerCase().trimLeft().indexOf(searchValue) > -1 )
+            ? row.style.display = 'table-row'
+            : row.style.display = 'none'
+    } )
 }
