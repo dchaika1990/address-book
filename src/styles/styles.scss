@@ -19,3 +19,7 @@ input{
 thead{
   white-space: nowrap;
 }
+
+th:hover{
+  cursor: pointer;
+}
