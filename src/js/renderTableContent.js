@@ -18,6 +18,16 @@ const renderTableContent = (tableWrap, books) => {
 	`
 	}
 
+	if (!books.length) {
+		tableWrap.innerHTML = `
+			<tr class="text-center">
+				 <td colspan="5">
+					  Your Address Book Empty. Please Add Something :)       
+				  </td>
+       		</tr>
+		`;
+	}
+
 	books.forEach((book, index) => {
 		tableWrap.innerHTML += _createTemplate(book, index);
 	})

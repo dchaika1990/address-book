@@ -3,4 +3,10 @@ import "./styles/styles.scss";
 import app from "./js/app";
 
 // App init
-app.init('.add-info','.table tbody');
+document.addEventListener('DOMContentLoaded', () =>{
+	app.init({
+		formSelector: '.add-info',
+		wrapSelector: '.table tbody',
+		selectMessage: '.message'
+	});
+})

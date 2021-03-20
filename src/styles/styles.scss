@@ -2,24 +2,62 @@ $primary-color: white;
 $bg: black;
 
 *:hover,
-*:focus{
-  outline: unset;
+*:focus {
+   outline: unset;
 }
 
-header{
-  background-color: #0b102e;
-  color: $primary-color;
-  padding: 20px 0;
+header {
+   background-color: #0b102e;
+   color: $primary-color;
+   padding: 20px 0;
+   position: relative;
+   z-index: 2;
 }
 
-input{
-  width: 100%;
+input {
+   width: 100%;
+   &::placeholder{
+      text-transform: capitalize;
+   }
 }
 
-thead{
-  white-space: nowrap;
+thead {
+   white-space: nowrap;
 }
 
-th:hover{
-  cursor: pointer;
+th:hover {
+   cursor: pointer;
+}
+
+.app{
+   margin-top: 100px;
+   margin-bottom: 100px;
+}
+
+.table {
+   td, th {
+      vertical-align: middle;
+   }
+}
+
+[contenteditable="true"] {
+   box-shadow: inset 0 0 0 1px #0b102e;
+}
+
+.message{
+   border: 1px solid rgba(0,0,0, .125);
+   padding: 20px;
+   border-radius: 3px;
+   border-left: 3px solid #856404;
+   width: calc(100% - 30px);
+   position: absolute;
+   left: 15px;
+   top: 0;
+   opacity: 0;
+   transform: translateY(-400%);
+   transition: all .4s ease-in-out;
+   &.active{
+      opacity: 1;
+      transform: translateY(-125%);
+   }
 }

@@ -6,16 +6,17 @@ import validation from "./validation";
 const app = {};
 
 //Create method
-app.init = function (formSelector, wrapSelector) {
+app.init = function ({formSelector, wrapSelector, selectMessage}) {
 	const form = document.querySelector(formSelector);
 	const tableWrap = document.querySelector(wrapSelector);
+	const message = document.querySelector(selectMessage)
 	let flagSort = true
 	let books = [];
 
 	//Create actions
 	const actions = {
-		edit(elem, index){
-			index = elem.closest('tr').getAttribute('data-index');
+		edit(elem){
+			const index = elem.closest('tr').getAttribute('data-index');
 			const elementsToEdit = elem.closest('tr').querySelectorAll('[data-edit]');
 			let newBook = {};
 			if (elem.getAttribute('data-btn-edit') === 'false') {
@@ -32,12 +33,14 @@ app.init = function (formSelector, wrapSelector) {
 					newBook[elem.dataset.edit] = elem.textContent;
 				})
 				books = rewriteArray(books, newBook, index);
+				actions.sendMessage('This item was changed in the address book');
 				actions.render();
 			}
 		},
-		delete(elem, index){
-			index = elem.closest('tr').getAttribute('data-index');
+		delete(elem){
+			const index = elem.closest('tr').getAttribute('data-index');
 			books.splice(index, 1);
+			actions.sendMessage('This item was delete from the address book');
 			actions.render();
 		},
 		sort(elem) {
@@ -69,9 +72,15 @@ app.init = function (formSelector, wrapSelector) {
 		updateLocal(){
 			localStorage.setItem('books', JSON.stringify(books))
 		},
+		sendMessage(text, time = 5000){
+			message.innerHTML = text;
+			message.classList.add('active')
+			setTimeout(() => message.classList.remove('active'), time);
+		},
 		submit(e){
 			e.preventDefault();
 			actions.addNewBook(this.querySelectorAll('input'));
+			actions.sendMessage('New item added to the address book');
 			actions.render();
 		},
 		render(){
@@ -85,9 +94,8 @@ app.init = function (formSelector, wrapSelector) {
 	//Create listeners
 	const listeners = event => {
 		const elem = event.target;
-		let index;
-		if (checkAttribute(elem, 'data-btn-edit')) actions.edit(elem, index);
-		if (checkAttribute(elem, 'data-btn-delete')) actions.delete(elem, index);
+		if (checkAttribute(elem, 'data-btn-edit')) actions.edit(elem);
+		if (checkAttribute(elem, 'data-btn-delete')) actions.delete(elem);
 		if (checkAttribute(elem, 'data-key')) actions.sort(elem);
 	}
 
